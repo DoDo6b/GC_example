@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 #define STACK_MAX_SIZE 256
-#define IGCT 8
+#define THRESHOLD 8
 
 typedef struct{
 	Object* stack[STACK_MAX_SIZE];

@@ -1,33 +1,21 @@
-# Компилятор и флаги
-CC = clang
-CFLAGS = -Wall -Wextra -Werror -std=c11 -g
-INCLUDES = -I.
-LDLIBS = -lm  # При необходимости добавьте другие библиотеки (-lpthread и т.д.)
+CC = gcc
+CFLAGS = -Wall -Wextra -std=c99
+BUILD_DIR = build
+TARGET = GC
 
-# Исходные файлы и структура
 SRCS = main.c type.c vm.c
-OBJS = $(addprefix build/,$(SRCS:.c=.o))  # Все .o файлы в папке build
-TARGET = GC  # Исполняемый файл тоже в build
+OBJS = $(SRCS:%.c=$(BUILD_DIR)/%.o)
 
-# Создание папки build
-$(shell mkdir -p build)
-
-# Основной таргет
 all: $(TARGET)
 
-# Линковка
 $(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) $^ -o $@ $(LDLIBS)
+	$(CC) $(CFLAGS) -o $@ $(OBJS)
 
-# Правило для сборки .o файлов в build/
-build/%.o: %.c type.h vm.h
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+$(BUILD_DIR)/%.o: %.c
+	@mkdir -p $(BUILD_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-# Очистка
 clean:
-	rm -rf build
+	rm -rf $(BUILD_DIR) $(TARGET)
 
-# Пересборка
-rebuild: clean all
-
-.PHONY: all clean rebuild
+.PHONY: all clean

@@ -1,4 +1,4 @@
-#include <type.h>
+#include "type.h"
 
 void mark(Object* object){
 	if(object->marked) return;

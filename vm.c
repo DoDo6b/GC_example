@@ -15,7 +15,7 @@ VM* newVM(){
 	vm->stackSize = 0;
 	vm->top = NULL;
 	vm->numObjects = 0;
-	vm->maxObjects = IGCT;
+	vm->maxObjects = THRESHOLD;
 	return vm;
 }
 
